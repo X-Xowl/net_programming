@@ -79,20 +79,17 @@ int main()
                 if (!send_all(client_fd,buffer,n))
                 {
                     cerr << "Failed to send data to client" << endl;
-                    close(client_fd);
                     break;
                 }
             }
             else if (n==0)
             {
                 cout << "Client disconnected: " << client_ip << ":" << ntohs(client_addr.sin_port) << endl;
-                close(client_fd);
                 break;
             }
             else
             {
                 perror("recv");
-                close(client_fd);
                 break;
             }
         }

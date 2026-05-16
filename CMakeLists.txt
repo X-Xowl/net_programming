@@ -5,4 +5,7 @@ set(CMAKE_CXX_STANDARD 23)
 
 add_executable(untitled10 main.cpp
         main.cpp
-        ThreadPool.h)
+        ThreadPool.h
+        Epoll.cpp
+        Epoll.h
+        Socket.h)

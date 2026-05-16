@@ -13,7 +13,7 @@
 class ThreadPool
 {
 public:
-    explicit ThreadPool(size_t thread_count)
+    explicit ThreadPool(size_t thread_count,size_t queue_size=1024):max_queue_size_(queue_size)
     {
         for (size_t i = 0;i < thread_count;++i)
         {
@@ -39,6 +39,10 @@ public:
     {
         std::lock_guard<std::mutex> lock(mutex_);
         if (stop_)
+        {
+            return false;
+        }
+        if (tasks_.size() >= max_queue_size_)
         {
             return false;
         }
@@ -70,6 +74,7 @@ private:
     std::queue<std::function<void()>> tasks_;
     std::mutex mutex_;
     std::condition_variable cv_;
+    size_t max_queue_size_;
     bool stop_ = false;
 };
 #endif //UNTITLED10_THREADPOOL_H
